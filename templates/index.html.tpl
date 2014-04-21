@@ -1,4 +1,4 @@
-{include file=header.html.tpl class=index}
+{include file='header.html.tpl' class='index'}
 <h1>PPH-Umfrage</h1>
 <p>Dieses Tool dient der Erfassung von Meinungen innerhalb der Piratenpartei
  Hessen. Den genauen Vorgang findet ihr im
@@ -26,4 +26,4 @@
 </tr>
 {/foreach}
 </table>
-{include file=footer.html.tpl}
+{include file='footer.html.tpl'}

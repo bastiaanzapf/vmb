@@ -9,5 +9,5 @@
 <meta http-equiv="Content-Type" content="text/html; Charset={$CHARSET}" />
 </head>
 <body class="{$class}">
-<img src="{getlink file=logo.png}" id="logo" />
+<img src="{getlink file='logo.png'}" id="logo" />
 <div id="content">
