@@ -50,22 +50,30 @@ while ($row = $rslt->fetch_object()) {
 
 	// Verschlüssele den "Body" der Mail
 
-	$gpg->clearencryptkeys();
-	$gpg->addencryptkey($rslt->email);
+	try {
+	  $gpg->clearencryptkeys();
+	  $gpg->addencryptkey($row->email);
 
-	$enc_body=$gpg->encrypt($body);
+	  $enc_body=$gpg->encrypt($body);
 
-	// Verschicke die Mail und im anonymisiere den Eintrag gleich mit jupis@invalid
-
-	if ($db->query("INSERT INTO `".DB_getBlacklistTokenTable()."` (`mailhash`, `token`, `validtill`) VALUES ('".$db->real_escape_string(getMailhash($row->email))."', '".$db->real_escape_string($optouttoken)."', '".$db->real_escape_string(date("Y-m-d", time() + $config->optoutdays*24*60*60))."')")
-	  && mail($row->email, $subject, $enc_body, $header)
-	  && $db->query("
+	  if ($db->query("INSERT INTO `".DB_getBlacklistTokenTable()."` (`mailhash`, `token`, `validtill`) VALUES ('".$db->real_escape_string(getMailhash($row->email))."', '".$db->real_escape_string($optouttoken)."', '".$db->real_escape_string(date("Y-m-d", time() + $config->optoutdays*24*60*60))."')")
+	      && mail($row->email, $subject, $enc_body, $header)
+	      && $db->query("
 		UPDATE	`".DB_getTokenTable($id)."`
 		SET	`sent` = NOW(), `email` = 'jupis@invalid', `token` = '".$db->real_escape_string($token)."'
 		WHERE	`tid` = ".intval($row->tid)))
-	{
-		$c++;
+	    {
+	      $c++;
+	    }
+
+
+	} catch (Exception $e) {
+	  if ($e->getMessage() == 'get_key failed') {
+	    throw new Exception("Schlüssel für '".($row->email)."' nicht gefunden.");
+	  }
 	}
+	// Verschicke die Mail und im anonymisiere den Eintrag gleich mit jupis@invalid
+
 }
 
 echo "<p><b>Habe $c Mails verschickt und anonymisiert.</b></p>\n";
