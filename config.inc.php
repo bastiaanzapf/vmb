@@ -4,7 +4,7 @@ $config = new stdClass;
 $config->remoteip = $_SERVER["REMOTE_ADDR"];
 
 /* AdminHost, der Globale Umfragen verwalten kann. */
-$config->adminhost = "localhost:8080";
+$config->adminhost = "localhost";
 
 /* Charset, welches verwendet werden soll */
 $config->charset = "UTF-8";
@@ -17,7 +17,7 @@ $config->replytomail = "piraten@invalid";
 /* Datenbankeinstellungen */
 $config->mysql_host = "localhost";
 $config->mysql_user = "vmb";
-$config->mysql_pass = "vy1XDJ7rZioNI";
+$config->mysql_pass = "S737eGZZZkans";
 $config->mysql_name = "vmb";
 
 /* Unser Link. Wichtig in den Mails */
