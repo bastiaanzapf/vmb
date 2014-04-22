@@ -62,5 +62,4 @@
 </table>
 {/foreach}
 {/if}
-<span class="penis">PENIS</span>
 {include file=footer.html.tpl}
