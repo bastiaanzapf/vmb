@@ -11,17 +11,17 @@ $config->charset = "UTF-8";
 
 /* Administrator */
 $config->adminname = "Administrator";
-$config->adminmail = "patrick.rauscher@piratenpartei-hessen.de";
+$config->adminmail = "bzapf@online.de";
 $config->replytomail = "piraten@invalid";
 
 /* Datenbankeinstellungen */
 $config->mysql_host = "localhost";
-$config->mysql_user = "root";
-$config->mysql_pass = "anything92";
-$config->mysql_name = "limesurvey";
+$config->mysql_user = "vmb";
+$config->mysql_pass = "vy1XDJ7rZioNI";
+$config->mysql_name = "vmb";
 
 /* Unser Link. Wichtig in den Mails */
-$config->link = "http://192.168.100.166/~prauscher/lime/";
+$config->link = "http://vmb/";
 
 /* Farben in der Statistik */
 $config->colors = array("004586", "ff420e", "ffd320", "579d1c", "7e0021", "83caff", "314004", "aecf00", "4b1f6f", "ff950e", "c5000b", "0084d1");

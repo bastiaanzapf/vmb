@@ -29,6 +29,12 @@ $desc = $row->desc;
 $start = $row->start;
 $expire = $row->expire;
 
+$gpg=new gnupg();
+$gpg->seterrormode(GNUPG_ERROR_EXCEPTION);
+
+ini_set('error_display',true);
+error_reporting(E_ALL);
+
 if (!is_numeric($config->bulkmailcount) || $config->bulkmailcount <= 0) {
 	$config->bulkmailcount = 30;
 }
@@ -43,8 +49,15 @@ while ($row = $rslt->fetch_object()) {
 	prepareMail($db, $id, $lang, $title, $desc, $start, $expire, $token, $optouttoken, $body, $header, $subject);
 
 	// Verschicke die Mail und im anonymisiere den Eintrag gleich mit jupis@invalid
+
+	$gpg->clearencryptkeys();
+	$gpg->addencryptkey($rslt->email);
+
+	$enc_body=$gpg->encrypt($body);
+	
+	var_dump($enc_body);
 	if ($db->query("INSERT INTO `".DB_getBlacklistTokenTable()."` (`mailhash`, `token`, `validtill`) VALUES ('".$db->real_escape_string(getMailhash($row->email))."', '".$db->real_escape_string($optouttoken)."', '".$db->real_escape_string(date("Y-m-d", time() + $config->optoutdays*24*60*60))."')")
-	  && mail($row->email, $subject, $body, $header)
+	  && mail($row->email, $subject, $enc_body, $header)
 	  && $db->query("
 		UPDATE	`".DB_getTokenTable($id)."`
 		SET	`sent` = NOW(), `email` = 'jupis@invalid', `token` = '".$db->real_escape_string($token)."'

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Ein Kommentar fuer die Hessen:
- *	PENIS!
- */
-
 require_once("smarty.inc.php");
 $smarty = getSmarty();
 
@@ -22,6 +17,7 @@ $rslt = $db->query("
 	LEFT JOIN `".$db->real_escape_string(DB_getSurveysTable())."` AS `s` ON (`l`.`surveyls_survey_id` = `s`.`sid`)
 	WHERE	(`s`.`admin` = '".$db->real_escape_string($host)."' AND `s`.`private` = 'Y') OR `s`.`private` = 'N'
 	ORDER BY `s`.`datecreated` DESC");
+
 $surveys = array();
 while ($row = $rslt->fetch_object()) {
 	$survey = array();
