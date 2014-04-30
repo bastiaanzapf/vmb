@@ -1,5 +1,6 @@
 <?php
-
+ini_set('display_errors',true);
+error_reporting(E_ALL);
 require_once("config.inc.php");
 require_once("library.inc.php");
 require_once("Smarty/Smarty.class.php");
@@ -18,9 +19,9 @@ function getSmarty() {
 		}
 	}
 	$smarty = new Smarty;
-	$smarty->register_function("getlink", "smarty_getLink");
-	$smarty->register_modifier("htmlescape", "htmlentities2");
-	$smarty->register_modifier("parselinks", "parselinks");
+	$smarty->registerPlugin('function',"getlink", "smarty_getLink");
+	$smarty->registerPlugin('modifier',"htmlescape", "htmlentities2");
+	$smarty->registerPlugin('modifier',"parselinks", "parselinks");
 	$smarty->assign("CHARSET", $config->charset);
 	$smarty->assign("ADMINNAME", $config->adminname);
 	$smarty->assign("ADMINMAIL", $config->adminmail);

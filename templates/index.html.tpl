@@ -1,4 +1,4 @@
-{include file=header.html.tpl class=index}
+{include file='header.html.tpl' class='index'}
 <h1>PPH-Umfrage</h1>
 <p>Dieses Tool dient der Erfassung von Meinungen innerhalb der Piratenpartei
  Hessen. Den genauen Vorgang findet ihr im
@@ -11,8 +11,8 @@
 <table>
 {assign var=time value=$smarty.now}
 {foreach from=$surveys item=survey}
-{if ($survey.end<$time)}{assign var=expired value=1}{/if}
-{if ($survey.start>$time)}{assign var=waiting value=1}{/if}
+{if ($survey.end<$time)}{assign var="expired" value="1"}{{else}}{assign var="expired" value="0"}{/if}
+{if ($survey.start>$time)}{assign var="waiting" value="1"}{{else}}{assign var="waiting" value="0"}{/if}
 <tr>
  <td class="status">
   {if !$survey.active && ($expired || $survey.end == null)}<img src="{getlink file="img/status_closed.png"}" alt="Beendet" title="Diese Umfrage ist beendet. Die Auswertung steht zur Verf&uuml;gung." />
@@ -26,4 +26,4 @@
 </tr>
 {/foreach}
 </table>
-{include file=footer.html.tpl}
+{include file='footer.html.tpl'}
