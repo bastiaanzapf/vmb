@@ -17,11 +17,11 @@ $config->replytomail = "piraten@invalid";
 /* Datenbankeinstellungen */
 $config->mysql_host = "localhost";
 $config->mysql_user = "vmb";
-$config->mysql_pass = "53vSjDMEUNmeM";
+$config->mysql_pass = "S737eGZZZkans";
 $config->mysql_name = "vmb";
 
 /* Unser Link. Wichtig in den Mails */
-$config->link = "http://vmb/";
+$config->link = "http://vsrv57121.customer.vlinux.de/";
 
 /* Farben in der Statistik */
 $config->colors = array("004586", "ff420e", "ffd320", "579d1c", "7e0021", "83caff", "314004", "aecf00", "4b1f6f", "ff950e", "c5000b", "0084d1");

@@ -1,8 +1,9 @@
 AuthType Basic
-AuthName "SECRET ... it@junge-piraten.de"
-AuthUserFile /home/prauscher/public_html/lime/admin/.htpasswd
-AuthGroupFile /home/prauscher/public_html/lime/admin/.htgroups
+AuthName "Administrationsinterface Testinstallation vmb"
+AuthGroupFile /etc/apache2/htgroup
+AuthUserFile /etc/apache2/htpasswd
 Require valid-user
+
 <Files ~ (insertmails.php|manageblacklist.php)>
 	Require group insertmails
 </Files>
