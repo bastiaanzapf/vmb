@@ -1,6 +1,6 @@
-{include file=header.html.tpl title="Auswertung $title" class=auswertung}
-{include file=surveyinfo.html.tpl title=$title desc=$desc sid=$id start=$start end=$end}
-{if $tokens > 0 && $usetokens}<p class="wahlbeteiligung">Wahlbeteiligung: <span id="wahlbeteiligung">{math equation=v/t*100 v=$votes t=$tokens format="%.2f"} %</span> (<span id="votes">{$votes}</span> abgegebene Stimmen von <span id="tokens">{$tokens}</span> m&ouml;glichen Stimmen)</p>
+{include file="header.html.tpl" title="{{$title}}" class="auswertung"}
+{include file='surveyinfo.html.tpl' title="{{$title}}" desc="{{$desc}}" sid="{{$id}}" start="{{$start}}" end="{{$end}}"}
+{if $tokens > 0 && $usetokens}<p class="wahlbeteiligung">Wahlbeteiligung: <span id="wahlbeteiligung">{math equation="v/t*100" v=$votes t=$tokens format="%.2f"} %</span> (<span id="votes">{$votes}</span> abgegebene Stimmen von <span id="tokens">{$tokens}</span> m&ouml;glichen Stimmen)</p>
 {elseif !$usetokens}<p class="wahlbeteiligung">Es haben <span id="votes">{$votes}</span> Leute abgestimmt.</p>{/if}
 <p class="links">
 {if isset($loglink)}<a href="{$loglink}" class="loglink">Log anzeigen</a>{/if}
@@ -44,7 +44,7 @@
  <th class="optimg"><img src="{$option.optimg}" /></th>
  <th class="answer">{$option.answer|htmlescape}</th>
  <td class="votes">{$option.votes}</td>
- <td class="anteil">{if $votes<=0}X{else}{math equation=v/t*100 v=$option.votes t=$votes format="%.2f"} %{/if}</td>
+ <td class="anteil">{if $votes<=0}X{else}{math equation="v/t*100" v=$option.votes t=$votes format="%.2f"} %{/if}</td>
  {else}
  <th class="optimg">&nbsp;</th>
  <th class="answer">&nbsp;</th>
@@ -55,11 +55,12 @@
  <th class="optimg full"><img src="{$option.optimg}" /></th>
  <th class="answer full">{$option.answer|htmlescape}</th>
  <td class="votes full">{$option.votes}</td>
- <td class="anteil full">{if $tokens<=0}X{else}{math equation=v/t*100 v=$option.votes t=$tokens format="%.2f"} %{/if}</td>
+ <td class="anteil full">{if $tokens<=0}X{else}{math equation="v/t*100" v=$option.votes t=$tokens format="%.2f"} %{/if}</td>
  {/if}
 </tr>
 {/foreach}
 </table>
 {/foreach}
 {/if}
-{include file=footer.html.tpl}
+{include file='footer.html.tpl'}
+
