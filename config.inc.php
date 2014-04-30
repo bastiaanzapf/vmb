@@ -17,7 +17,7 @@ $config->replytomail = "piraten@invalid";
 /* Datenbankeinstellungen */
 $config->mysql_host = "localhost";
 $config->mysql_user = "vmb";
-$config->mysql_pass = "S737eGZZZkans";
+$config->mysql_pass = "53vSjDMEUNmeM";
 $config->mysql_name = "vmb";
 
 /* Unser Link. Wichtig in den Mails */
