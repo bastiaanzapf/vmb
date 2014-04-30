@@ -29,6 +29,12 @@ $desc = $row->desc;
 $start = $row->start;
 $expire = $row->expire;
 
+$gpg=new gnupg();
+$gpg->seterrormode(GNUPG_ERROR_EXCEPTION);
+
+ini_set('error_display',true);
+error_reporting(E_ALL);
+
 if (!is_numeric($config->bulkmailcount) || $config->bulkmailcount <= 0) {
 	$config->bulkmailcount = 30;
 }
@@ -42,16 +48,32 @@ while ($row = $rslt->fetch_object()) {
 	// Das Magische Vorbereitungsscript ;)
 	prepareMail($db, $id, $lang, $title, $desc, $start, $expire, $token, $optouttoken, $body, $header, $subject);
 
-	// Verschicke die Mail und im anonymisiere den Eintrag gleich mit jupis@invalid
-	if ($db->query("INSERT INTO `".DB_getBlacklistTokenTable()."` (`mailhash`, `token`, `validtill`) VALUES ('".$db->real_escape_string(getMailhash($row->email))."', '".$db->real_escape_string($optouttoken)."', '".$db->real_escape_string(date("Y-m-d", time() + $config->optoutdays*24*60*60))."')")
-	  && mail($row->email, $subject, $body, $header)
-	  && $db->query("
+	// Verschlüssele den "Body" der Mail
+
+	try {
+	  $gpg->clearencryptkeys();
+	  $gpg->addencryptkey($row->email);
+
+	  $enc_body=$gpg->encrypt($body);
+
+	  if ($db->query("INSERT INTO `".DB_getBlacklistTokenTable()."` (`mailhash`, `token`, `validtill`) VALUES ('".$db->real_escape_string(getMailhash($row->email))."', '".$db->real_escape_string($optouttoken)."', '".$db->real_escape_string(date("Y-m-d", time() + $config->optoutdays*24*60*60))."')")
+	      && mail($row->email, $subject, $enc_body, $header)
+	      && $db->query("
 		UPDATE	`".DB_getTokenTable($id)."`
 		SET	`sent` = NOW(), `email` = 'jupis@invalid', `token` = '".$db->real_escape_string($token)."'
 		WHERE	`tid` = ".intval($row->tid)))
-	{
-		$c++;
+	    {
+	      $c++;
+	    }
+
+
+	} catch (Exception $e) {
+	  if ($e->getMessage() == 'get_key failed') {
+	    throw new Exception("Schlüssel für '".($row->email)."' nicht gefunden.");
+	  }
 	}
+	// Verschicke die Mail und im anonymisiere den Eintrag gleich mit jupis@invalid
+
 }
 
 echo "<p><b>Habe $c Mails verschickt und anonymisiert.</b></p>\n";

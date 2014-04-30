@@ -63,4 +63,3 @@
 {/foreach}
 {/if}
 {include file='footer.html.tpl'}
-

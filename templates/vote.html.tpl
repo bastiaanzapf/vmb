@@ -1,5 +1,5 @@
-{include file=header.html.tpl class=vote title="Umfrage $title" }
-{include file=surveyinfo.html.tpl title=$title desc=$desc sid=$id start=$start end=$end}
+{include file='header.html.tpl' class=vote title="Umfrage $title" }
+{include file='surveyinfo.html.tpl' title=$title desc=$desc sid=$id start=$start end=$end}
 {if isset($votecounted)}
 <p class="done">Deine Stimme wurde erfolgreich gewertet! Danke f&uuml;r deine Meinung!</p>
 <p class="info">Wenn du es dir noch einmal anders &uuml;berlegst, kannst du den Link aus der Mail erneut nutzen.</p>
@@ -22,4 +22,4 @@
  </fieldset>
 </form>
 {/if}
-{include file=footer.html.tpl}
+{include file='footer.html.tpl'}
